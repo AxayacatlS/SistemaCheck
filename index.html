@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Obtener Información del Dispositivo</title>
+</head>
+<body>
+    <h1>Información del Dispositivo</h1>
+    <button id="userAgentButton">Obtener User-Agent</button>
+    <button id="screenResolutionButton">Obtener Resolución de Pantalla</button>
+    <button id="deviceOrientationButton">Obtener Orientación del Dispositivo</button>
+    <button id="deviceLocationButton">Obtener Ubicación del Dispositivo</button>
+    <button id="browserLanguageButton">Obtener Idioma del Navegador</button>
+    <button id="deviceLocalTimeButton">Obtener Hora Local del Dispositivo</button>
+    <button id="deviceTypeButton">Obtener Tipo de Dispositivo</button>
+
+    <div id="result"></div>
+
+    <script>
+        const userAgentButton = document.getElementById("userAgentButton");
+        const screenResolutionButton = document.getElementById("screenResolutionButton");
+        const deviceOrientationButton = document.getElementById("deviceOrientationButton");
+        const deviceLocationButton = document.getElementById("deviceLocationButton");
+        const browserLanguageButton = document.getElementById("browserLanguageButton");
+        const deviceLocalTimeButton = document.getElementById("deviceLocalTimeButton");
+        const deviceTypeButton = document.getElementById("deviceTypeButton");
+        const resultDiv = document.getElementById("result");
+
+        // Obtener el User-Agent
+        userAgentButton.addEventListener("click", () => {
+            const userAgent = navigator.userAgent;
+            resultDiv.innerHTML = `User-Agent: ${userAgent}`;
+        });
+
+        // Obtener la resolución de pantalla
+        screenResolutionButton.addEventListener("click", () => {
+            const screenWidth = window.screen.width;
+            const screenHeight = window.screen.height;
+            resultDiv.innerHTML = `Resolución de Pantalla: ${screenWidth} x ${screenHeight}`;
+        });
+
+        // Obtener la orientación del dispositivo
+        deviceOrientationButton.addEventListener("click", () => {
+            const orientation = window.orientation;
+            resultDiv.innerHTML = `Orientación del Dispositivo: ${orientation}`;
+        });
+
+        // Obtener la ubicación del dispositivo
+        deviceLocationButton.addEventListener("click", () => {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    resultDiv.innerHTML = `Ubicación: Latitud ${latitude}, Longitud ${longitude}`;
+                });
+            } else {
+                resultDiv.innerHTML = "La geolocalización no está disponible en este navegador.";
+            }
+        });
+
+        // Obtener el idioma del navegador
+        browserLanguageButton.addEventListener("click", () => {
+            const userLanguage = navigator.language;
+            resultDiv.innerHTML = `Idioma del Navegador: ${userLanguage}`;
+        });
+
+        // Obtener la hora local del dispositivo
+        deviceLocalTimeButton.addEventListener("click", () => {
+            const localTime = new Date().toLocaleTimeString();
+            resultDiv.innerHTML = `Hora Local del Dispositivo: ${localTime}`;
+        });
+
+        // Obtener el tipo de dispositivo (detección básica de dispositivo móvil)
+        deviceTypeButton.addEventListener("click", () => {
+            const isMobile = /iPhone|iPad|iPod|Android|Windows Phone/i.test(navigator.userAgent);
+            const deviceType = isMobile ? "Dispositivo Móvil" : "Computadora de Escritorio";
+            resultDiv.innerHTML = `Tipo de Dispositivo: ${deviceType}`;
+        });
+    </script>
+</body>
+</html>
